@@ -28,10 +28,10 @@ class Solution:
 
         clusters = []
         pointers = {}
-        ungrouped = set()
+        grouped = set()
         for m in merges:
-            ungrouped.add(m[0])
-            ungrouped.add(m[1])
+            grouped.add(m[0])
+            grouped.add(m[1])
             fci = pointers.get(m[0], -1)
             sci = pointers.get(m[1], -1)
 
@@ -50,7 +50,7 @@ class Solution:
 
         il = 0
         for i in range(1, cnt+1):
-            if i not in ungrouped:
+            if i not in grouped:
                 il += 1
         
         return len([x for x in clusters if x is not None]) + il
