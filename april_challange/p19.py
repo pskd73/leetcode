@@ -1,9 +1,6 @@
 from typing import List
 
 class Solution:
-    def modInd(self, i, lst):
-        return i%len(lst)
-
     def binary(self, nums, pivot, at_end, is_next):
         if len(nums) == 1:
             return at_end(0, 0)
@@ -19,29 +16,32 @@ class Solution:
         return -1
 
     def search(self, nums: List[int], target: int) -> int:
+        def modInd(i):
+            return i%len(nums)
+
         pivot = self.binary(
             nums, 
             0, 
             lambda frm, to: to if nums[frm] > nums[to] else frm, 
-            lambda frm, to, mid: nums[self.modInd(mid, nums)] > nums[self.modInd(to, nums)]
+            lambda frm, to, mid: nums[modInd(mid)] > nums[modInd(to)]
         )
 
         def idxFromTo(frm, to):
-            if nums[self.modInd(frm, nums)] == target:
+            if nums[modInd(frm)] == target:
                 return frm
-            elif nums[self.modInd(to, nums)] == target:
+            elif nums[modInd(to)] == target:
                 return to
             return -1
-            
+
         idx = self.binary(
             nums, 
             pivot, 
             idxFromTo, 
-            lambda frm, to, mid: nums[self.modInd(mid, nums)] < target
+            lambda frm, to, mid: nums[modInd(mid)] < target
         )
         if idx == -1:
             return -1
-        return self.modInd(idx, nums)
+        return modInd(idx)
 
 
 s = Solution()
