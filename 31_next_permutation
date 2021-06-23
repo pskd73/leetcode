@@ -1,0 +1,26 @@
+class Solution:
+    def nextPermutation(self, nums: List[int]) -> None:
+        nei = len(nums) - 2
+        while nei >= 0:
+            if nums[nei] < nums[nei + 1]:
+                break
+            nei -= 1
+        if nei == -1:
+            nums.reverse()
+            return
+        nni, mdiff = nei, 100000
+        for i in range(nei + 1, len(nums)):
+            diff = nums[i] - nums[nei]
+            if diff > 0 and diff <  mdiff:
+                nni = i
+        t = nums[nni]
+        nums[nni] = nums[nei]
+        nums[nei] = t
+        l, r = nei + 1, len(nums) - 1
+        while l < r:
+            t = nums[l]
+            nums[l] = nums[r]
+            nums[r] = t
+            l += 1
+            r -= 1
+        
